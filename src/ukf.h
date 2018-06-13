@@ -67,6 +67,7 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  int n_sigma_;
 
   /**
    * Constructor
@@ -102,6 +103,17 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+private:
+	MatrixXd getAugmentedSigmaPoints();
+	MatrixXd getSigmaPointPrediction(MatrixXd Xsig_aug, double delta_t);
+	void getPredictedMeanAndCovariance();
+	MatrixXd predictSigmaPointsInLaserSpace();
+	VectorXd getPredictedMeanForLaser(MatrixXd Zsig);
+	MatrixXd getPredictedCovarianceForLaser(MatrixXd Zsig, VectorXd z_pred);
+	MatrixXd predictSigmaPointsInRadarSpace();
+	VectorXd getPredictedMeanForRadar(MatrixXd Zsig);
+	MatrixXd getPredictedCovarianceForRadar(MatrixXd Zsig, VectorXd z_pred);
 };
 
 #endif /* UKF_H */
